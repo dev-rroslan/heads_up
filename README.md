@@ -11,8 +11,34 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Learn more
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
+  * To find beam process: ps aux | grep beam.smp. PID after user in this case ubuntu XXXXXX
+  * Kill the process: kill -15 <PID>
+  * sudo nano /etc/systemd/system/heads_up.service
+  [Unit]
+Description=Heads Up Phoenix Application
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/heads_up/_build/prod/rel/heads_up
+Environment="PORT=4001" "MIX_ENV=prod" "SECRET_KEY_BASE=kZxQQ/6vhGoxxxxx "DATABASE_URL=ecto://USER:PASSWORD@localhost/heads_up
+ExecStart=/home/ubuntu/heads_up/_build/prod/rel/heads_up/bin/heads_up start
+Restart=on-failure
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
+  * # Initial setup
+mix deps.get --only prod
+MIX_ENV=prod mix compile
+
+# Compile assets
+MIX_ENV=prod mix assets.deploy
+
+# Custom tasks (like DB migrations)
+MIX_ENV=prod mix ecto.migrate
+
   * Source: https://github.com/phoenixframework/phoenix
