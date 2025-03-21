@@ -23,7 +23,7 @@ Type=simple
 User=ubuntu
 Group=ubuntu
 WorkingDirectory=/home/ubuntu/heads_up/_build/prod/rel/heads_up
-Environment="PORT=4001" "MIX_ENV=prod" "SECRET_KEY_BASE=kZxQQ/6vhGoxxxxx "DATABASE_URL=ecto://USER:PASSWORD@localhost/heads_up
+Environment="PORT=4001" "MIX_ENV=prod" "SECRET_KEY_BASE=kZxQQ/6vhGoxxxxx "DATABASE_URL=ecto://USER:PASSWORD@localhost/heads_up" "RESEND=XXXXXXXXXX"
 ExecStart=/home/ubuntu/heads_up/_build/prod/rel/heads_up/bin/heads_up start
 Restart=on-failure
 RemainAfterExit=yes
@@ -38,7 +38,12 @@ MIX_ENV=prod mix compile
 # Compile assets
 MIX_ENV=prod mix assets.deploy
 
+# Create new release
+MIX_ENV=prod mix release
+
+# Restart heads_up
+sudo systemctl restart heads_up
+
 # Custom tasks (like DB migrations)
 MIX_ENV=prod mix ecto.migrate
 
-  * Source: https://github.com/phoenixframework/phoenix
