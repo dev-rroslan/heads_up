@@ -55,14 +55,15 @@ if config_env() == :prod do
       environment variable SECRET_KEY_BASE is missing.
       You can generate one by calling: mix phx.gen.secret
       """
-  host = "applikasi.tech"
-  #host = System.get_env("PHX_HOST") || "applikasi.tech"
+  #host = "applikasi.tech"
+  host = System.get_env("PHX_HOST") || "applikasi.tech" || "www.applikasi.tech"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :heads_up, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :heads_up, HeadsUpWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
+    check_origin: ["https://applikasi.tech", "https://www.applikasi.tech"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -72,7 +73,7 @@ if config_env() == :prod do
       port: port
 
     ],
-    #check_origin: ["applikast.tech"],
+    #check_origin: ["https://www.applikast.tech", "https://applikasi.tech"],
     server: true,
     secret_key_base: secret_key_base
 
