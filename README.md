@@ -1,13 +1,21 @@
 # HeadsUp
 
-To start your Phoenix server:
+Nginx reverse proxy
+sudo nano /etc/nginx/sites-available/reverse-proxy
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+server {
+    server_name applikasi.tech www.applikasi.tech;
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+    # Proxy all other requests to Phoenix app
+    location / {
+        proxy_http_version 1.1;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_pass http://localhost:4001;
+    }
+}
 
 ## Learn more
 
