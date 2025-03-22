@@ -1,5 +1,13 @@
 import Config
 
+
+config :heads_up, HeadsUp.Mailer,
+  adapter: Resend.Swoosh.Adapter,
+  api_key: System.fetch_env!("RESEND")
+
+config :swoosh, :api_client, Swoosh.ApiClient.Finch
+
+#config :swoosh, :api_client, Swoosh.ApiClient.Finch
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
 # system starts, so it is typically used to load production configuration
@@ -47,8 +55,8 @@ if config_env() == :prod do
       environment variable SECRET_KEY_BASE is missing.
       You can generate one by calling: mix phx.gen.secret
       """
-
-  host = System.get_env("PHX_HOST") || "165.154.236.48"
+  host = "applikasi.tech"
+  #host = System.get_env("PHX_HOST") || "applikasi.tech"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :heads_up, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
@@ -62,7 +70,9 @@ if config_env() == :prod do
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
+
     ],
+    #check_origin: ["applikast.tech"],
     server: true,
     secret_key_base: secret_key_base
 

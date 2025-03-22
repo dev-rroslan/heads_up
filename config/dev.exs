@@ -29,6 +29,12 @@ config :heads_up, HeadsUpWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:heads_up, ~w(--watch)]}
   ]
 
+config :heads_up, HeadsUp.Mailer,
+  adapter: Resend.Swoosh.Adapter,
+  api_key: System.fetch_env!("RESEND")
+
+config :swoosh, :api_client, Swoosh.ApiClient.Finch
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
