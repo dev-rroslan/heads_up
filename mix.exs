@@ -42,7 +42,7 @@ defmodule HeadsUp.MixProject do
       {:phoenix_live_view, "~> 1.0.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
-      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      #{:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:heroicons,
        github: "tailwindlabs/heroicons",
@@ -59,7 +59,8 @@ defmodule HeadsUp.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:resend, "~> 0.4.4"}
+      {:resend, "~> 0.4.4"},
+      {:live_svelte, "~> 0.15.0"}
     ]
   end
 
@@ -71,7 +72,7 @@ defmodule HeadsUp.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
@@ -79,7 +80,7 @@ defmodule HeadsUp.MixProject do
       "assets.build": ["tailwind heads_up", "esbuild heads_up"],
       "assets.deploy": [
         "tailwind heads_up --minify",
-        "esbuild heads_up --minify",
+        "cmd --cd assets node build.js --deploy",
         "phx.digest"
       ]
     ]

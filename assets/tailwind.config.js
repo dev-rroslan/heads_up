@@ -9,7 +9,8 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/heads_up_web.ex",
-    "../lib/heads_up_web/**/*.*ex"
+    "../lib/heads_up_web/**/*.*ex",
+    "./svelte/**/*.svelte"
   ],
   theme: {
     extend: {

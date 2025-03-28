@@ -8,6 +8,7 @@ defmodule HeadsUp.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {NodeJS.Supervisor, [path: LiveSvelte.SSR.NodeJS.server_path(), pool_size: 4]},
       HeadsUpWeb.Telemetry,
       HeadsUp.Repo,
       {DNSCluster, query: Application.get_env(:heads_up, :dns_cluster_query) || :ignore},

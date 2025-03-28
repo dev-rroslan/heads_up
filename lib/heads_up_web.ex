@@ -93,6 +93,9 @@ defmodule HeadsUpWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      #Svelte - live_svelte configuration
+      import LiveSvelte  # <-- Add this line
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end
